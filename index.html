@@ -37,6 +37,7 @@
             height: 80vh;
             background: url('https://via.placeholder.com/1600x900') center/cover no-repeat;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
             text-align: center;
@@ -48,6 +49,25 @@
             font-size: 60px;
             max-width: 800px;
             line-height: 1.1;
+            margin-bottom: 30px;
+        }
+
+        /* --- Animated Button --- */
+        .btn {
+            padding: 15px 40px;
+            font-size: 20px;
+            font-weight: bold;
+            background: #ff4d00;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: transform 0.25s ease, background 0.25s ease;
+        }
+
+        .btn:hover {
+            transform: scale(1.08);
+            background: #ff6a2a;
         }
 
         .section {
@@ -95,6 +115,9 @@
 
 <section class="hero">
     <h1>Empowering the Next Generation of Athletes</h1>
+
+    <!-- Animated Button -->
+    <button class="btn">Mill‑Turn CNC</button>
 </section>
 
 <section class="section">
