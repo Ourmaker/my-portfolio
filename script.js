@@ -62,16 +62,14 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Replace the endpoint below with your form backend (Formspree, Netlify Forms, Supabase, etc.)
-    // This example just opens the user's email client (fallback).
+    // This example opens user's email client as a fallback.
     try {
-      // Example: to integrate with a real endpoint, use fetch()
-      // For demo fallback, open mailto:
-      const subject = encodeURIComponent(`Inquiry from ${name}`);
-      const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${message}`);
-      window.location.href = `mailto:hello@ourmaker.example?subject=${subject}&body=${body}`;
+      const subject = encodeURIComponent(`CNC Quote from ${name}`);
+      const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nProject details:\n${message}`);
+      window.location.href = `mailto:hello@ourmakercnc.example?subject=${subject}&body=${body}`;
       status.textContent = 'Opening email client...';
       form.reset();
-      setTimeout(()=> status.textContent = 'Message draft opened in your email client. You can also replace mailto with your API endpoint in script.js', 2200);
+      setTimeout(()=> status.textContent = 'Draft opened in your email client. For production, replace mailto with your API endpoint in script.js', 2200);
     } catch (err) {
       console.error(err);
       status.textContent = 'Something went wrong — try again later.';
