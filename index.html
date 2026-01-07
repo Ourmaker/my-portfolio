@@ -1,185 +1,533 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Ourmaker CNC — CNC Specialist & CAM Programmer</title>
-  <meta name="description" content="Ourmaker CNC — CNC specialist and CAM programmer. Precision toolpaths, fixture design, and production-ready G-code for milling, turning, and multi-axis machining." />
+  <meta charset="UTF-8" />
+  <title>Oleksandr Kravchenko – CNC Specialist & CAM Programmer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg-dark: #0b0c10;
+      --bg-panel: #111319;
+      --accent: #00c2ff;
+      --accent-soft: rgba(0, 194, 255, 0.25);
+      --text-main: #f5f5f5;
+      --text-muted: #a0a4b0;
+      --border-soft: #252837;
+      --mono: "Fira Code", Consolas, Menlo, monospace;
+      --sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
 
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-  <link rel="stylesheet" href="styles.css">
+    body {
+      font-family: var(--sans);
+      color: var(--text-main);
+      background-color: var(--bg-dark);
+      line-height: 1.5;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+    }
+
+    /* Engineering drawing background */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        radial-gradient(circle at 10% 20%, rgba(0, 194, 255, 0.12) 0, transparent 55%),
+        radial-gradient(circle at 80% 80%, rgba(0, 194, 255, 0.08) 0, transparent 55%);
+      background-size: 32px 32px, 32px 32px, 100% 100%, 100% 100%;
+      opacity: 0.9;
+      z-index: -2;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 40px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .page {
+      width: 100%;
+      max-width: 1100px;
+      padding: 32px 16px 48px;
+    }
+
+    @media (min-width: 900px) {
+      .page {
+        padding: 48px 24px 64px;
+      }
+    }
+
+    header {
+      display: grid;
+      grid-template-columns: minmax(0, 2fr) minmax(0, 1.4fr);
+      gap: 24px;
+      align-items: center;
+      margin-bottom: 32px;
+    }
+
+    @media (max-width: 720px) {
+      header {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .hero {
+      background: radial-gradient(circle at top left, rgba(0, 194, 255, 0.18), transparent 55%);
+      padding: 24px 24px 20px;
+      border-radius: 16px;
+      border: 1px solid var(--border-soft);
+      backdrop-filter: blur(6px);
+    }
+
+    .name {
+      font-size: 2.1rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .title {
+      font-size: 1.05rem;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      margin-bottom: 16px;
+      font-family: var(--mono);
+    }
+
+    .hero-summary {
+      font-size: 0.98rem;
+      color: var(--text-muted);
+      max-width: 40rem;
+    }
+
+    .hero-summary strong {
+      color: var(--text-main);
+      font-weight: 600;
+    }
+
+    .contact-card {
+      background: linear-gradient(135deg, rgba(0, 194, 255, 0.12), rgba(0, 0, 0, 0.4));
+      border-radius: 16px;
+      border: 1px solid var(--accent-soft);
+      padding: 18px 20px;
+      font-size: 0.9rem;
+      display: grid;
+      gap: 6px;
+    }
+
+    .contact-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--text-muted);
+    }
+
+    .contact-main {
+      font-family: var(--mono);
+      font-size: 0.9rem;
+    }
+
+    .contact-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    .chip {
+      border-radius: 999px;
+      border: 1px solid var(--border-soft);
+      padding: 4px 10px;
+      font-size: 0.78rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background-color: rgba(0, 0, 0, 0.35);
+    }
+
+    .chip span {
+      font-family: var(--mono);
+      color: var(--accent);
+    }
+
+    main {
+      display: grid;
+      grid-template-columns: minmax(0, 2fr) minmax(0, 1.2fr);
+      gap: 24px;
+    }
+
+    @media (max-width: 900px) {
+      main {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    section {
+      background-color: rgba(5, 7, 12, 0.9);
+      border-radius: 16px;
+      border: 1px solid var(--border-soft);
+      padding: 18px 20px 20px;
+      margin-bottom: 16px;
+    }
+
+    h2 {
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--mono);
+    }
+
+    h2::before {
+      content: "";
+      width: 18px;
+      height: 1px;
+      background-color: var(--accent);
+      opacity: 0.7;
+    }
+
+    .tag-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 4px;
+    }
+
+    .tag {
+      border-radius: 999px;
+      border: 1px solid var(--border-soft);
+      padding: 3px 9px;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      background-color: rgba(10, 12, 18, 0.9);
+      font-family: var(--mono);
+    }
+
+    .tag.highlight {
+      border-color: var(--accent-soft);
+      color: var(--accent);
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 10px 16px;
+      margin-top: 6px;
+    }
+
+    .list-label {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    ul {
+      list-style: none;
+      font-size: 0.86rem;
+      color: var(--text-muted);
+    }
+
+    ul li {
+      margin-bottom: 3px;
+      position: relative;
+      padding-left: 12px;
+    }
+
+    ul li::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-size: 0.7rem;
+      top: 3px;
+    }
+
+    .experience-item {
+      border-left: 1px solid var(--border-soft);
+      padding-left: 12px;
+      margin-bottom: 14px;
+    }
+
+    .exp-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      font-size: 0.86rem;
+    }
+
+    .exp-role {
+      font-weight: 600;
+    }
+
+    .exp-company {
+      color: var(--accent);
+    }
+
+    .exp-meta {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      font-family: var(--mono);
+    }
+
+    .exp-body {
+      margin-top: 4px;
+      font-size: 0.86rem;
+      color: var(--text-muted);
+    }
+
+    .exp-machines,
+    .exp-tools {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-top: 3px;
+      font-family: var(--mono);
+    }
+
+    .exp-machines span,
+    .exp-tools span {
+      color: var(--accent);
+    }
+
+    .lang-list li {
+      margin-bottom: 2px;
+    }
+
+    footer {
+      margin-top: 24px;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      text-align: right;
+      font-family: var(--mono);
+    }
+
+    footer span {
+      color: var(--accent);
+    }
+  </style>
 </head>
 <body>
-  <header class="site-header">
-    <div class="container header-inner">
-      <a class="brand" href="#hero">Ourmaker CNC</a>
-      <nav class="nav" id="nav">
-        <ul>
-          <li><a href="#work">Projects</a></li>
-          <li><a href="#services">Services</a></li>
-          <li><a href="#about">About</a></li>
-          <li><a href="#contact" class="cta">Request quote</a></li>
-        </ul>
-      </nav>
-      <button id="nav-toggle" class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
-    </div>
-  </header>
-
-  <!-- HERO -->
-  <main>
-    <section id="hero" class="hero">
-      <picture class="hero-media">
-        <!-- Replace with shop photo or hero video -->
-        <source media="(min-width: 800px)" srcset="https://images.unsplash.com/photo-1581091012184-7b0c7b8c3f24?q=80&w=1600&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder">
-        <img src="https://images.unsplash.com/photo-1555685812-4b943f1b4adc?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder" alt="CNC machine milling a metal part">
-      </picture>
-
-      <div class="hero-overlay"></div>
-
-      <div class="container hero-content">
-        <h1 class="display">Precision CNC & CAM programming for production and prototyping</h1>
-        <p class="lead">I’m Ourmaker — CNC specialist and CAM programmer. I optimize toolpaths, setup fixtures, and deliver production-ready G-code for milling, turning, and multi-axis machining.</p>
-        <p class="hero-ctas">
-          <a class="btn btn-primary" href="#work">See projects</a>
-          <a class="btn" href="#contact">Request a quote</a>
+  <div class="page">
+    <header>
+      <div class="hero">
+        <div class="name">Oleksandr Kravchenko</div>
+        <div class="title">CNC Specialist & CAM Programmer</div>
+        <p class="hero-summary">
+          CNC specialist with strong expertise in <strong>multi-axis machining</strong>, <strong>CAM programming</strong>,
+          fixture design, and precision manufacturing across aerospace, composites, medical, and industrial sectors.
+          Skilled in <strong>DFM/DFA</strong>, process optimisation, and high-tolerance production. EU citizen, based in Copenhagen.
         </p>
-        <div class="hero-stats">
-          <div><strong>5,000+</strong><span>parts produced</span></div>
-          <div><strong>8</strong><span>years experience</span></div>
-          <div><strong>Available</strong><span>for hire</span></div>
-        </div>
       </div>
-    </section>
 
-    <!-- WORK / PROJECTS -->
-    <section id="work" class="section work">
-      <div class="container">
-        <h2 class="section-title">Selected projects</h2>
-        <p class="section-sub">Examples of production runs, prototype builds, and CAM optimization I led.</p>
-
-        <div class="grid projects">
-          <!-- Project card -->
-          <article class="project-card reveal">
-            <a href="#" class="project-media" aria-label="Open project">
-              <img src="https://images.unsplash.com/photo-1542293787938-c9e299b880d6?q=80&w=900&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder" alt="Production milled part">
-            </a>
-            <div class="project-body">
-              <h3 class="project-title">High-Volume Housing — Production Run</h3>
-              <p class="project-desc">CAM programming and fixture design for a 2,000-piece production run. Optimized cycle time and tool life.</p>
-              <p class="project-meta">Mastercam • Haas • Fixture design • Cycle reduction</p>
-            </div>
-          </article>
-
-          <article class="project-card reveal">
-            <a href="#" class="project-media" aria-label="Open project">
-              <img src="https://images.unsplash.com/photo-1518779578993-ec3579fee39f?q=80&w=900&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder" alt="Prototype components on a table">
-            </a>
-            <div class="project-body">
-              <h3 class="project-title">Prototype Batch — Aerospace Component</h3>
-              <p class="project-desc">Rapid prototyping using 3+ setups, verified toolpaths in Vericut, and delivered production-ready G-code.</p>
-              <p class="project-meta">Fusion 360 • Vericut • 3-axis & 4-axis • ISO G-code</p>
-            </div>
-          </article>
-
-          <article class="project-card reveal">
-            <a href="#" class="project-media" aria-label="Open project">
-              <img src="https://images.unsplash.com/photo-1593642532973-d31b6557fa68?q=80&w=900&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder" alt="CAM software on screen">
-            </a>
-            <div class="project-body">
-              <h3 class="project-title">Toolpath Optimization — Medical Parts</h3>
-              <p class="project-desc">Reduced cycle time 28% through revised toolpaths, adaptive feeds, and optimized tooling sequences.</p>
-              <p class="project-meta">GibbsCAM • Toolpath strategy • Fixturing • Documentation</p>
-            </div>
-          </article>
+      <div class="contact-card">
+        <div class="contact-label">Contact</div>
+        <div class="contact-main">Copenhagen, Denmark · +45 91 868 050 · ourmaker7@gmail.com</div>
+        <div class="contact-links">
+          <div class="chip"><span>LinkedIn</span> / profile on request</div>
+          <div class="chip"><span>GitHub</span> / portfolio & code samples</div>
         </div>
+        <div class="contact-label" style="margin-top:10px;">Status</div>
+        <div class="contact-main">Open to roles in advanced manufacturing, robotics, and high-precision CNC production.</div>
       </div>
-    </section>
+    </header>
 
-    <!-- SERVICES -->
-    <section id="services" class="section services">
-      <div class="container">
-        <h2 class="section-title">Services</h2>
-        <div class="grid service-cards">
-          <div class="card reveal">
-            <h3>CNC Programming & Setup</h3>
-            <p>End-to-end CNC programming for mills and lathes, machine setup, and on-floor support to ensure first-part success.</p>
+    <main>
+      <!-- LEFT COLUMN -->
+      <div>
+        <section>
+          <h2>Core skills</h2>
+          <div class="two-col">
+            <div>
+              <div class="list-label">Machining</div>
+              <ul>
+                <li>3–5 axis milling</li>
+                <li>Mill-turn, live tooling, subspindle, double-turret</li>
+                <li>High-tolerance prototype & small-series production</li>
+                <li>Automated probing (Renishaw, Blum)</li>
+              </ul>
+            </div>
+            <div>
+              <div class="list-label">Process & quality</div>
+              <ul>
+                <li>G-code / M-code editing</li>
+                <li>Simulation & collision detection</li>
+                <li>Process optimisation & cycle time reduction</li>
+                <li>DFM/DFA collaboration</li>
+                <li>ERP production planning</li>
+                <li>ISO 9001 / 14001 environments</li>
+              </ul>
+            </div>
           </div>
-          <div class="card reveal">
-            <h3>CAM Programming & Optimization</h3>
-            <p>Mastercam, Fusion 360, GibbsCAM toolpaths, adaptive strategies, and feed/ speed optimization for throughput and tool life.</p>
+        </section>
+
+        <section>
+          <h2>Experience</h2>
+
+          <div class="experience-item">
+            <div class="exp-header">
+              <div>
+                <div class="exp-role">CNC Engineer</div>
+                <div class="exp-company">Orbex Aerospace</div>
+              </div>
+              <div class="exp-meta">Denmark · Feb 2024 – Present</div>
+            </div>
+            <div class="exp-body">
+              Manufacture of space-grade components including rocket engine parts. Machining of 3D-printed metals,
+              Inconel, and stainless steel. Designed fixtures, jaws, and tooling; optimised machining strategies for
+              reliability and throughput.
+            </div>
+            <div class="exp-machines">
+              <span>Machines:</span> Okuma Multus U3000, Genos M460V-5AX, DMG Mori ecoturn 310, Haas EC1600ZT
+            </div>
+            <div class="exp-tools">
+              <span>CAM:</span> Mastercam · <span>CAD:</span> SolidWorks
+            </div>
           </div>
-          <div class="card reveal">
-            <h3>Fixture Design & Verification</h3>
-            <p>Custom fixture concepts, workholding recommendations, and simulation/verification in Vericut to eliminate collisions.</p>
+
+          <div class="experience-item">
+            <div class="exp-header">
+              <div>
+                <div class="exp-role">Technologist / CNC Programmer</div>
+                <div class="exp-company">Ensinger Composites</div>
+              </div>
+              <div class="exp-meta">Poland · Dec 2022 – Feb 2024</div>
+            </div>
+            <div class="exp-body">
+              Machining of PEEK, CFRP, and fibre-reinforced composites. Developed machining processes for prototypes
+              and small series, balancing tool life, surface quality, and dimensional stability.
+            </div>
+            <div class="exp-machines">
+              <span>Machines:</span> DMG MORI DMU 40/50/60/80 (5-axis), Heidenhain controls
+            </div>
+            <div class="exp-tools">
+              <span>Materials:</span> TECATEC PEEK MT/CW30/CW50, CFRP · <span>CAM:</span> Mastercam · <span>CAD:</span> SolidWorks
+            </div>
           </div>
-        </div>
+
+          <div class="experience-item">
+            <div class="exp-header">
+              <div>
+                <div class="exp-role">CNC Programmer / CNC Operator</div>
+                <div class="exp-company">3Shape</div>
+              </div>
+              <div class="exp-meta">Poland · Apr 2018 – Aug 2022</div>
+            </div>
+            <div class="exp-body">
+              High-precision prototype and short-series machining. Managed &gt;120 tools and tight-tolerance 5-axis
+              strategies for complex components.
+            </div>
+            <div class="exp-machines">
+              <span>Machine:</span> Hermle C22U, Heidenhain control
+            </div>
+            <div class="exp-tools">
+              <span>Materials:</span> aluminium, steel, hardened steel, stainless steel, PEEK, POM ·
+              <span>CAM:</span> PowerMill, hyperMILL, NX CAM · <span>CAD:</span> SolidWorks
+            </div>
+          </div>
+
+          <div class="experience-item">
+            <div class="exp-header">
+              <div>
+                <div class="exp-role">CNC Programmer / Machinist / Operator</div>
+                <div class="exp-company">Various companies</div>
+              </div>
+              <div class="exp-meta">Poland & Ukraine · 2010 – 2018</div>
+            </div>
+            <div class="exp-body">
+              Operated CNC milling, routing, plasma-cutting, laser cutting, bending, and woodworking centres.
+              Supported prototype and small-series production for construction, entertainment equipment, and industrial applications.
+            </div>
+          </div>
+        </section>
       </div>
-    </section>
 
-    <!-- ABOUT -->
-    <section id="about" class="section about">
-      <div class="container about-inner">
-        <div class="about-text reveal">
-          <h2 class="section-title">About me</h2>
-          <p>I’m a CNC specialist and CAM programmer working with shops and product teams to turn designs into manufacturable parts. I focus on efficient toolpaths, robust fixturing, and reliable G-code that runs on Haas, Fanuc, and Siemens-controlled machines.</p>
-          <ul class="skills">
-            <li>Mastercam • Fusion 360 • GibbsCAM</li>
-            <li>Vericut simulation & G-code verification</li>
-            <li>Fixture & tooling design</li>
-            <li>Multi-axis programming (3+1, 4, 5-axis)</li>
-            <li>G-code optimization and cycle time reduction</li>
+      <!-- RIGHT COLUMN -->
+      <div>
+        <section>
+          <h2>CAM & CAD</h2>
+          <div class="tag-grid">
+            <div class="tag highlight">Mastercam</div>
+            <div class="tag highlight">PowerMill</div>
+            <div class="tag highlight">NX CAM</div>
+            <div class="tag highlight">hyperMILL</div>
+            <div class="tag">SolidWorks</div>
+            <div class="tag">AutoCAD</div>
+            <div class="tag">Vericut</div>
+          </div>
+        </section>
+
+        <section>
+          <h2>CNC controls</h2>
+          <div class="tag-grid">
+            <div class="tag">HEIDENHAIN 530/620/640</div>
+            <div class="tag">Okuma OSP-P300SA/MA</div>
+            <div class="tag">Siemens 840D ShopMill</div>
+            <div class="tag">Haas CNC control</div>
+          </div>
+        </section>
+
+        <section>
+          <h2>Materials</h2>
+          <ul>
+            <li>3D printed parts</li>
+            <li>Nickel alloys (Inconel, Hastelloy)</li>
+            <li>PEEK, TECAPEEK, TECATEC grades</li>
+            <li>Hardox and other wear-resistant steels</li>
+            <li>Stainless steel, aluminium</li>
+            <li>Copper, brass, bronze</li>
+            <li>PTFE (Teflon) and engineering plastics</li>
           </ul>
-        </div>
-        <div class="about-media reveal">
-          <img src="https://images.unsplash.com/photo-1545239351-1141bd82e8a6?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder" alt="Portrait of a CNC specialist">
-        </div>
+        </section>
+
+        <section>
+          <h2>Languages</h2>
+          <ul class="lang-list">
+            <li>Danish – A2 (continuously learning)</li>
+            <li>English – IELTS B2</li>
+            <li>Polish – Native</li>
+            <li>Ukrainian – Native</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Education & certifications</h2>
+          <div class="list-label">Education</div>
+          <ul>
+            <li>Kirovograd Engineering College – CNC Machines & Robotics</li>
+            <li>Kirovograd Pedagogical University – English Linguistics</li>
+          </ul>
+          <div class="list-label" style="margin-top:8px;">Certifications</div>
+          <ul>
+            <li>Forklift license</li>
+            <li>Crane Cat. IIS</li>
+            <li>Driving license B / C / D</li>
+          </ul>
+        </section>
       </div>
-    </section>
+    </main>
 
-    <!-- CONTACT -->
-    <section id="contact" class="section contact">
-      <div class="container">
-        <h2 class="section-title">Get a quote</h2>
-        <p class="section-sub">Need CNC programming, CAM optimization, or fixturing help? Send a message with your project details and I’ll reply promptly.</p>
-
-        <form id="contact-form" class="contact-form" novalidate>
-          <div class="form-grid">
-            <label>
-              <span>Name</span>
-              <input type="text" name="name" required>
-            </label>
-            <label>
-              <span>Email</span>
-              <input type="email" name="email" required>
-            </label>
-            <label class="full">
-              <span>Project details (materials, quantities, tolerances, deadline)</span>
-              <textarea name="message" rows="5" required></textarea>
-            </label>
-          </div>
-
-          <div class="form-actions">
-            <button type="submit" class="btn btn-primary">Send request</button>
-            <span id="form-status" class="form-status" aria-live="polite"></span>
-          </div>
-        </form>
-      </div>
-    </section>
-  </main>
-
-  <footer class="site-footer">
-    <div class="container footer-inner">
-      <div>© <span id="year"></span> Ourmaker CNC — CNC Specialist & CAM Programmer</div>
-      <div class="social">
-        <a href="#" aria-label="Twitter">Twitter</a>
-        <a href="#" aria-label="GitHub">GitHub</a>
-        <a href="#" aria-label="LinkedIn">LinkedIn</a>
-      </div>
-    </div>
-  </footer>
-
-  <script src="script.js" defer></script>
+    <footer>
+      <span>//</span> Portfolio generated from CNC & CAM experience · Oleksandr Kravchenko
+    </footer>
+  </div>
 </body>
 </html>
